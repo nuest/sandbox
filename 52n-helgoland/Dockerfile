@@ -57,3 +57,4 @@ COPY settings.json settings.json
 # leave default CMD
 # docker build -t 52n-helgoland .
 # docker run --name helgoland -p 80:80 52n-helgoland
+# http://localhost
