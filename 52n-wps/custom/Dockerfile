@@ -1,5 +1,3 @@
-FROM tomcat:9
-MAINTAINER Daniel Nüst <daniel.nuest@uni-muenster.de>
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -12,23 +10,20 @@ MAINTAINER Daniel Nüst <daniel.nuest@uni-muenster.de>
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+FROM 52n-wps-base
+MAINTAINER Daniel Nüst <daniel.nuest@uni-muenster.de>
 
 # Project: https://github.com/52North/wps
 
-## Install required dependencies > none?!
-
-# Download release and deploy in Tomcat, see docs at https://wiki.52north.org/SensorWeb/SensorObservationServiceIVDocumentation
 WORKDIR $CATALINA_HOME/webapps
-RUN curl -L -o wps.war http://52north.org/downloads/send/15-wps/492-52n-wps-webapp-3-5-0 \
-    #&& unzip -d wps wps.zip
-    # \
-    # webapp name fixed in several config files of the bundle
-    #&& mv wps.war $CATALINA_HOME/webapps
+RUN unzip -d wps wps.war
+COPY index.html wps/index.html
 
 # TODO geotools package: http://52north.org/downloads/send/15-wps/493-wps-3-5-0-geotools-package
-# TODO change run command to use wps-config-file??
+# TODO replace wps-config-file with custom one
 
-# docker build -t 52n-wps .
-# docker run --name wps -p 80:8080 52n-wps
+# Build 52n-wps-base image first!
+# docker build -t 52n-wps-custom .
+# docker run --name wps-custom -p 80:8080 52n-wps-custom
 # http://localhost/wps
 # Login: wps/wps
